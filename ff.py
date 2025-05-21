@@ -10,6 +10,7 @@ class MCQItem(BaseModel):
     question: str = Field(..., description="The question text")
     options: Optional[Dict[str, str]] = Field(..., description="Options with keys A-D")
     answer : str = Field(..., description="The answer text")
+    explanation: Optional[str] = Field(..., description="The explanation for the answer")
 
 class MCQSet(BaseModel):
     mcqs: Optional[Dict[str, MCQItem]] = Field(..., description="A dictionary of MCQs keyed by question number (e.g., '1', '2')")
@@ -35,6 +36,7 @@ def generate_mcqs(mode: str, content= '', number=None, topic=None) -> MCQSet:
     1. "question": A string with the question text.
     2. "options": An object where keys are "A", "B", "C", "D" and values are the option texts.
     3. "answer": A string indicating the correct option key (e.g., "A").
+    4. "explanation": A string with the explanation for the answer.
     Do not include any explanation or text outside the JSON.
     """
 
