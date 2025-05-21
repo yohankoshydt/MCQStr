@@ -17,7 +17,7 @@ if mode == "parse":
     # Input for parse/generate
     input_method = st.radio("Choose input method:", ["Upload File", "Enter Text"])
     if input_method == "Upload File":
-        uploaded_file = st.file_uploader("Upload a file containing MCQs (.txt or .json)", type=["txt", "json"])
+        uploaded_file = st.file_uploader("Upload a file containing MCQs (.txt only)", type=["txt"])
         if uploaded_file is not None:
             user_text = uploaded_file.read().decode("utf-8")
     elif input_method == "Enter Text":
