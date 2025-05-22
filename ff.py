@@ -28,7 +28,10 @@ def generate_mcqs(mode: str, content= '', number=None, topic=None) -> MCQSet:
 
     # ✅ Prompt
     p1 = """
-    Your task is to convert the text you receive into the format below.
+    Your task is to convert the MCQs in the text you receive into the format below.
+    The text you receive can be a test sheet, a PDF with MCQs, or any other unstructured text. Ignore other parts of the text that are not MCQs.
+    Make sure that the questions you extract are sound and the explanations are correct.
+
     You MUST respond with a single, valid JSON object.
     The JSON object should have a key named "mcqs".
     The value of "mcqs" should be another JSON object where each key is a question number as a string (e.g., "1", "2", ...).

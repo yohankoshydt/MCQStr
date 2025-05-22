@@ -1,4 +1,5 @@
 import streamlit as st
+import PyPDF2
 from ff import generate_mcqs
 
 st.set_page_config(page_title="MCQ Parse")
@@ -17,9 +18,21 @@ if mode == "parse":
     # Input for parse/generate
     input_method = st.radio("Choose input method:", ["Upload File", "Enter Text"])
     if input_method == "Upload File":
-        uploaded_file = st.file_uploader("Upload a file containing MCQs (.txt only)", type=["txt"])
+        uploaded_file = st.file_uploader("Upload a PDF or Text file", type=["pdf", "txt"])
         if uploaded_file is not None:
-            user_text = uploaded_file.read().decode("utf-8")
+
+            if uploaded_file.type == "application/pdf":
+                pdf_reader = PyPDF2.PdfReader(uploaded_file)
+                all_text = ""
+                for page in pdf_reader.pages:
+                    all_text += page.extract_text() or ""
+                user_text = all_text
+            elif uploaded_file.type == "text/plain":
+                user_text = uploaded_file.read().decode("utf-8")
+            else:
+                st.warning("Unsupported file format")
+
+
     elif input_method == "Enter Text":
         user_text = st.text_area("Enter your MCQ content here:", height=300)
 
